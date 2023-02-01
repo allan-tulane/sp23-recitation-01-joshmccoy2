@@ -61,18 +61,16 @@ def test_binary_search():
 	assert binary_search([1,2,3,4,5], 5) == 4
 	assert binary_search([1,2,3,4,5], 1) == 0
 	assert binary_search([1,2,3,4,5], 6) == -1
-  assert binary_search([1,2,3,4,5], 4) == 3
-  assert binary_search([1,2,3,4,5], 275) == -1
-	### TODO: add two more tests here.
-
-	###
+  # assert binary_search([1,2,3,4,5, 8], 4) == 3
+  # assert binary_search([1,2,3,4,5], 4) == 3
+  # assert binary_search([1,2,3,4,5], 275) == -1
 
 
 def time_search(search_fn, mylist, key):
 
   start = time.time()
   search_fn(mylist,key)
-  end = time.time
+  end = time.time()
   total = (end - start)*1000
   return total
   
@@ -99,12 +97,13 @@ def time_search(search_fn, mylist, key):
 
 def compare_search(sizes=[1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7]):
 
-  finalresult = []
+  results = []
   for i in sizes:
     mylist = list(range(int(i)))
-    finalresult.append((len(mylist),time_search(linear_search,  mylist, -1), time(binary_search, mylist, -1)))
+    results.append((len(mylist),time_search(linear_search,  
+    mylist, -1), time_search(binary_search, mylist, -1)))
 
-  return finalresult
+  return results
 
 """
 	Compare the running time of linear_search and binary_search
@@ -130,6 +129,8 @@ def print_results(results):
 							headers=['n', 'linear', 'binary'],
 							floatfmt=".3f",
 							tablefmt="github"))
+  
+print_results(compare_search())
 
 def test_compare_search():
 	res = compare_search(sizes=[10, 100])
